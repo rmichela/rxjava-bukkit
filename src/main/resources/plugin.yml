@@ -1,0 +1,9 @@
+name: RxBukkitTest
+version: "1.0"
+author: Ryan Michela
+main: TestPlugin.Plugin
+
+commands:
+   cmd:
+      description: It's a command.
+      usage: "Usage: cmd anything"
