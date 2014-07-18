@@ -21,9 +21,18 @@ public class MultiplexingCommandExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         CommandEvent commandEvent = new CommandEvent(sender, command, label, args);
+
+        List<Subscriber<? super CommandEvent>> unsubscribed = new LinkedList<>();
         for (Subscriber<? super CommandEvent> subscriber : subscribers) {
-            subscriber.onNext(commandEvent);
+            if (subscriber.isUnsubscribed()) {
+                unsubscribed.add(subscriber);
+            } else {
+                subscriber.onNext(commandEvent);
+            }
         }
+        // purge unsubscribed subscribers
+        subscribers.removeAll(unsubscribed);
+
         return !commandEvent.isCancelled();
     }
 }

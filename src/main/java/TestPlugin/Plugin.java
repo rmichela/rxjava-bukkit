@@ -1,6 +1,7 @@
 package TestPlugin;
 
 import RxBukkt.BukkitObservable;
+import RxBukkt.BukkitRxScheduler;
 import RxBukkt.CommandEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,7 +21,7 @@ public class Plugin extends JavaPlugin {
         Observable<PlayerInteractEvent> eveObs = BukkitObservable.fromBukkitEvent(this, PlayerInteractEvent.class);
 
         eveObs
-            .buffer(1, TimeUnit.SECONDS)
+            .buffer(1, TimeUnit.SECONDS, BukkitRxScheduler.forPlugin(this))
             .filter(new Func1<List<PlayerInteractEvent>, Boolean>() {
                 @Override
                 public Boolean call(List<PlayerInteractEvent> playerInteractEvents) {
@@ -33,10 +34,11 @@ public class Plugin extends JavaPlugin {
                     return playerInteractEvents.size() + " clicks";
                 }
             })
+//            .observeOn(BukkitRxScheduler.forPlugin(this))
             .subscribe(new Action1<String>() {
                 @Override
                 public void call(String s) {
-                    getLogger().info(s);
+                    getLogger().info(Thread.currentThread().getId() + " " + s);
                 }
             });
 
@@ -44,7 +46,7 @@ public class Plugin extends JavaPlugin {
             .subscribe(new Action1<PlayerInteractEvent>() {
                 @Override
                 public void call(PlayerInteractEvent playerInteractEvent) {
-                    getLogger().info("INTERACT");
+                    getLogger().info(Thread.currentThread().getId() + "");
                 }
             });
 
@@ -52,9 +54,6 @@ public class Plugin extends JavaPlugin {
         cmdObs.subscribe(new Action1<CommandEvent>() {
             @Override
             public void call(CommandEvent commandEvent) {
-//                if (commandEvent.getArgs().length == 0) {
-//                    commandEvent.setCancelled(true);
-//                }
                 getLogger().info(commandEvent.getCommand() + " " + commandEvent.getArgs().length);
             }
         });
