@@ -1,4 +1,4 @@
-package RxBukkt;
+package rx.bukkit.observable;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

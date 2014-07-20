@@ -1,7 +1,7 @@
 name: RxBukkitTest
 version: "1.0"
 author: Ryan Michela
-main: TestPlugin.Plugin
+main: restplugin.Plugin
 
 commands:
    cmd:

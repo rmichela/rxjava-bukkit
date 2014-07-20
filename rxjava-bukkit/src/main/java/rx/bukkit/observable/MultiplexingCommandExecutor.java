@@ -1,4 +1,4 @@
-package RxBukkt;
+package rx.bukkit.observable;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Copyright 2014 Ryan Michela
  */
-public class MultiplexingCommandExecutor implements CommandExecutor {
+class MultiplexingCommandExecutor implements CommandExecutor {
     private List<Subscriber<? super CommandEvent>> subscribers = new LinkedList<>();
 
     public void AddSubscriber(Subscriber<? super CommandEvent> subscriber) {

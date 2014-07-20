@@ -1,8 +1,8 @@
-package TestPlugin;
+package testplugin;
 
-import RxBukkt.BukkitObservable;
-import RxBukkt.BukkitRxScheduler;
-import RxBukkt.CommandEvent;
+import rx.bukkit.observable.BukkitObservable;
+import rx.bukkit.observable.CommandEvent;
+import rx.bukkit.scheduler.BukkitRxScheduler;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rx.Observable;

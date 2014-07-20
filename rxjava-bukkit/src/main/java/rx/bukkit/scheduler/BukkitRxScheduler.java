@@ -1,4 +1,4 @@
-package RxBukkt;
+package rx.bukkit.scheduler;
 
 import org.bukkit.plugin.Plugin;
 import rx.Scheduler;

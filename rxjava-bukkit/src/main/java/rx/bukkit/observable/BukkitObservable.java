@@ -1,4 +1,4 @@
-package RxBukkt;
+package rx.bukkit.observable;
 
 import org.bukkit.event.*;
 import org.bukkit.event.server.PluginDisableEvent;
