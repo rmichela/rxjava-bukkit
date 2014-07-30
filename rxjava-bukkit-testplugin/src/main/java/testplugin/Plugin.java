@@ -1,11 +1,11 @@
 package testplugin;
 
-import rx.bukkit.observable.BukkitObservable;
-import rx.bukkit.observable.CommandEvent;
-import rx.bukkit.scheduler.BukkitRxScheduler;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rx.Observable;
+import rx.bukkit.RxJavaPlugin;
+import rx.bukkit.observable.BukkitObservable;
+import rx.bukkit.observable.CommandEvent;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -17,11 +17,16 @@ import java.util.concurrent.TimeUnit;
  */
 public class Plugin extends JavaPlugin {
     @Override
+    public void onLoad() {
+        RxJavaPlugin.initializeRxBukkit(this);
+    }
+
+    @Override
     public void onEnable() {
         Observable<PlayerInteractEvent> eveObs = BukkitObservable.fromBukkitEvent(this, PlayerInteractEvent.class);
 
         eveObs
-            .buffer(1, TimeUnit.SECONDS, BukkitRxScheduler.forPlugin(this))
+            .buffer(1, TimeUnit.SECONDS)
             .filter(new Func1<List<PlayerInteractEvent>, Boolean>() {
                 @Override
                 public Boolean call(List<PlayerInteractEvent> playerInteractEvents) {
